@@ -1,4 +1,4 @@
-from langchain_community.tools import DuckDuckGoSearchResults
+from langchain_community.tools import DuckDuckGoSearchResults 
 from langchain.tools import Tool
 
 # Initialize DuckDuckGo search with more reasonable parameters
@@ -12,3 +12,4 @@ search_tool = Tool(
     func=search.run,
     description="Useful for searching the web for current information. Input should be a search query."
 )
+
