@@ -1,12 +1,12 @@
 from langchain_community.tools import DuckDuckGoSearchResults 
 from langchain.tools import Tool
 
-# Initialize DuckDuckGo search with more reasonable parameters
+
 search = DuckDuckGoSearchResults(
-    max_results=3,  # Limit results to avoid overwhelming the model
+    max_results=3,  
 )
 
-# Create the search tool
+
 search_tool = Tool(
     name="web_search",
     func=search.run,

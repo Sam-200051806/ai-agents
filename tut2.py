@@ -3,8 +3,7 @@ from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 import os
 from third_party.linkedin import linkedin_profile
-
-
+from help_tools.tool import get_profile # this is the tool that is used to search the web for current information and it is used with langchain
 if __name__ == "__main__":
     # Initialize the ChatGroq model
     print("Initializing ChatGroq model...")
@@ -14,8 +13,7 @@ if __name__ == "__main__":
     given the LinkedIn information {information} about the person from I want to you create few things that I will mention below:
       1. A short summary
       2. two insteresting facts in under 5 words
-      3. tell me the name of the person too
-      4. check if this person have skills in python, if yes then tell me the name of the person and the skills
+      3. provide me link of the profile image
     """
     summary_promt_template = PromptTemplate(
         input_variables=["information"],
@@ -27,10 +25,13 @@ if __name__ == "__main__":
         temperature=0.2, 
         max_tokens=1024 
     )
-    linkedin_data = linkedin_profile(linkedin_profile_url="https://www.linkedin.com/in/kartikey-sangal-752567301/",mock=True)
+    linkedin_data = linkedin_profile(linkedin_profile_url="https://www.linkedin.com/in/sambhav-seth-bbb440258/",mock=True)
     chain = summary_promt_template | llm 
     result = chain.invoke(
         input={"information": linkedin_data}
     )
     print(result.content)
    
+
+
+
