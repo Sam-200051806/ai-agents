@@ -16,12 +16,20 @@ def linkedin_profile(linkedin_profile_url: str, mock: bool = False):
             timeout=10,
         )
     else:
-        api_endpoint = "https://api.scrapin.io/enrichment/profile"
-        params = {
-            "apikey": os.environ["SCRAPIN_API_KEY"],
-            "linkedInUrl": linkedin_profile_url,
-        }
-        response = requests.get(api_endpoint, params=params, timeout=10)
+        print('-------------------\n----------------', linkedin_profile_url)
+        print('---------------')
+        import re
+
+        # Regex to match LinkedIn profile URLs
+        linkedin_urls = re.findall(r'https://(?:www|in)\.linkedin\.com/in/[a-zA-Z0-9\-]+', linkedin_profile_url)
+
+        print(linkedin_urls)
+
+        API_KEY = os.getenv('SCRAPIN_API_KEY')
+        api_endpoint =f"https://api.scrapin.io/enrichment/profile?apikey={API_KEY}&linkedInUrl={linkedin_urls[0]}"
+        # url = f"https://api.scrapin.io/enrichment/profile?apikey={API_KEY}&linkedInUrl={Linkedin_URL}"
+        
+        response = requests.get(api_endpoint, timeout=10)
 
         if response.status_code != 200:
             print("Error:", response.status_code, response.text)
